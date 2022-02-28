@@ -9,7 +9,7 @@ var pxToViewport = require('..');
 var basicCSS = '.rule { font-size: 15px }';
 var { filterPropList } = require('../src/prop-list-matcher');
 
-describe('px-to-viewport', function() {
+describe('px-to-viewport', function () {
   it('should work on the readme example', function () {
     var input = 'h1 { margin: 0 0 20px; font-size: 32px; line-height: 2; letter-spacing: 1px; }';
     var output = 'h1 { margin: 0 0 6.25vw; font-size: 10vw; line-height: 2; letter-spacing: 1px; }';
@@ -29,7 +29,7 @@ describe('px-to-viewport', function() {
     var rules = '.rule { margin: 0.5rem .5px -0.2px -.2em }';
     var expected = '.rule { margin: 0.5rem 0.15625vw -0.0625vw -.2em }';
     var options = {
-        minPixelValue: 0
+      minPixelValue: 0
     };
     var processed = postcss(pxToViewport(options)).process(rules).css;
 
@@ -50,7 +50,7 @@ describe('px-to-viewport', function() {
     expect(processed).toBe(expected);
   });
 
-  it('should not replace units inside mediaQueries by default', function() {
+  it('should not replace units inside mediaQueries by default', function () {
     var expected = '@media (min-width: 500px) { .rule { font-size: 16px } }';
     var processed = postcss(pxToViewport()).process('@media (min-width: 500px) { .rule { font-size: 16px } }').css;
 
@@ -58,10 +58,10 @@ describe('px-to-viewport', function() {
   })
 });
 
-describe('value parsing', function() {
+describe('value parsing', function () {
   it('should not replace values in double quotes or single quotes', function () {
     var options = {
-        propList: ['*']
+      propList: ['*']
     };
     var rules = '.rule { content: \'16px\'; font-family: "16px"; font-size: 16px; }';
     var expected = '.rule { content: \'16px\'; font-family: "16px"; font-size: 5vw; }';
@@ -87,7 +87,7 @@ describe('value parsing', function() {
   });
 });
 
-describe('unitToConvert', function() {
+describe('unitToConvert', function () {
   it('should ignore non px values by default', function () {
     var expected = '.rule { font-size: 2em }';
     var processed = postcss(pxToViewport()).process(expected).css;
@@ -107,15 +107,15 @@ describe('unitToConvert', function() {
   });
 });
 
-describe('viewportWidth', function() {
-  it('should should replace using 320px by default', function() {
+describe('viewportWidth', function () {
+  it('should should replace using 320px by default', function () {
     var expected = '.rule { font-size: 4.6875vw }';
     var processed = postcss(pxToViewport()).process(basicCSS).css;
 
     expect(processed).toBe(expected);
   });
 
-  it('should replace using viewportWidth from options', function() {
+  it('should replace using viewportWidth from options', function () {
     var expected = '.rule { font-size: 3.125vw }';
     var options = {
       viewportWidth: 480
@@ -130,7 +130,7 @@ describe('unitPrecision', function () {
   it('should replace using a decimal of 2 places', function () {
     var expected = '.rule { font-size: 4.69vw }';
     var options = {
-        unitPrecision: 2
+      unitPrecision: 2
     };
     var processed = postcss(pxToViewport(options)).process(basicCSS).css;
 
@@ -138,12 +138,12 @@ describe('unitPrecision', function () {
   });
 });
 
-describe('viewportUnit', function() {
-  it('should replace using unit from options', function() {
+describe('viewportUnit', function () {
+  it('should replace using unit from options', function () {
     var rules = '.rule { margin-top: 15px }';
     var expected = '.rule { margin-top: 4.6875vh }';
     var options = {
-        viewportUnit: 'vh'
+      viewportUnit: 'vh'
     };
     var processed = postcss(pxToViewport(options)).process(rules).css;
 
@@ -151,8 +151,8 @@ describe('viewportUnit', function() {
   });
 });
 
-describe('fontViewportUnit', function() {
-  it('should replace only font-size using unit from options', function() {
+describe('fontViewportUnit', function () {
+  it('should replace only font-size using unit from options', function () {
     var rules = '.rule { margin-top: 15px; font-size: 8px; }';
     var expected = '.rule { margin-top: 4.6875vw; font-size: 2.5vmax; }';
     var options = {
@@ -169,7 +169,7 @@ describe('selectorBlackList', function () {
     var rules = '.rule { font-size: 15px } .rule2 { font-size: 15px }';
     var expected = '.rule { font-size: 4.6875vw } .rule2 { font-size: 15px }';
     var options = {
-        selectorBlackList: ['.rule2']
+      selectorBlackList: ['.rule2']
     };
     var processed = postcss(pxToViewport(options)).process(rules).css;
 
@@ -180,7 +180,7 @@ describe('selectorBlackList', function () {
     var rules = 'body { font-size: 16px; } .class-body$ { font-size: 16px; } .simple-class { font-size: 16px; }';
     var expected = 'body { font-size: 5vw; } .class-body$ { font-size: 16px; } .simple-class { font-size: 5vw; }';
     var options = {
-        selectorBlackList: ['body$']
+      selectorBlackList: ['body$']
     };
     var processed = postcss(pxToViewport(options)).process(rules).css;
 
@@ -191,7 +191,7 @@ describe('selectorBlackList', function () {
     var rules = 'body { font-size: 16px; } .class-body { font-size: 16px; } .simple-class { font-size: 16px; }';
     var expected = 'body { font-size: 16px; } .class-body { font-size: 5vw; } .simple-class { font-size: 5vw; }';
     var options = {
-        selectorBlackList: [/^body$/]
+      selectorBlackList: [/^body$/]
     };
     var processed = postcss(pxToViewport(options)).process(rules).css;
 
@@ -200,9 +200,9 @@ describe('selectorBlackList', function () {
 });
 
 describe('mediaQuery', function () {
-  it('should replace px inside media queries if opts.mediaQuery', function() {
+  it('should replace px inside media queries if opts.mediaQuery', function () {
     var options = {
-        mediaQuery: true
+      mediaQuery: true
     };
     var processed = postcss(pxToViewport(options)).process('@media (min-width: 500px) { .rule { font-size: 16px } }').css;
     var expected = '@media (min-width: 500px) { .rule { font-size: 5vw } }';
@@ -210,7 +210,7 @@ describe('mediaQuery', function () {
     expect(processed).toBe(expected);
   });
 
-  it('should not replace px inside media queries if not opts.mediaQuery', function() {
+  it('should not replace px inside media queries if not opts.mediaQuery', function () {
     var options = {
       mediaQuery: false
     };
@@ -220,7 +220,17 @@ describe('mediaQuery', function () {
     expect(processed).toBe(expected);
   });
 
-  it('should replace px inside media queries if it has params orientation landscape and landscape option', function() {
+  it('should only replace px inside media queries if opts.mediaQuery is a RegExp or RegExp array', function () {
+    var options = {
+      mediaQuery: /max-width:\s*750px/
+    };
+    var processed = postcss(pxToViewport(options)).process('h1 { font-size: 32px } @media (max-width: 750px) { .rule { font-size: 16px } } @media (min-width: 751px) { .rule { font-size: 18px } }').css;
+    var expected = 'h1 { font-size: 32px } @media (max-width: 750px) { .rule { font-size: 5vw } } @media (min-width: 751px) { .rule { font-size: 18px } }';
+
+    expect(processed).toBe(expected);
+  });
+
+  it('should replace px inside media queries if it has params orientation landscape and landscape option', function () {
     var options = {
       mediaQuery: true,
       landscape: true
@@ -237,7 +247,7 @@ describe('propList', function () {
     var css = '.rule { font-size: 16px; margin: 16px; margin-left: 5px; padding: 5px; padding-right: 16px }';
     var expected = '.rule { font-size: 5vw; margin: 5vw; margin-left: 5px; padding: 5px; padding-right: 5vw }';
     var options = {
-        propList: ['*font*', 'margin*', '!margin-left', '*-right', 'pad']
+      propList: ['*font*', 'margin*', '!margin-left', '*-right', 'pad']
     };
     var processed = postcss(pxToViewport(options)).process(css).css;
 
@@ -248,7 +258,7 @@ describe('propList', function () {
     var css = '.rule { font-size: 16px; margin: 16px; margin-left: 5px; padding: 5px; padding-right: 16px }';
     var expected = '.rule { font-size: 16px; margin: 5vw; margin-left: 5px; padding: 5px; padding-right: 16px }';
     var options = {
-        propList: ['*', '!margin-left', '!*padding*', '!font*']
+      propList: ['*', '!margin-left', '!*padding*', '!font*']
     };
     var processed = postcss(pxToViewport(options)).process(css).css;
 
@@ -267,8 +277,8 @@ describe('propList', function () {
 describe('minPixelValue', function () {
   it('should not replace values below minPixelValue', function () {
     var options = {
-        propWhiteList: [],
-        minPixelValue: 2
+      propWhiteList: [],
+      minPixelValue: 2
     };
     var rules = '.rule { border: 1px solid #000; font-size: 16px; margin: 1px 10px; }';
     var expected = '.rule { border: 1px solid #000; font-size: 5vw; margin: 1px 3.125vw; }';
@@ -324,6 +334,19 @@ describe('exclude', function () {
 
     expect(processed).toBe(covered);
   });
+
+  it('when using incorrect type at the time, should throw an error.', function () {
+    var options = {
+      exclude: 'incorrectTypeAsString'
+    };
+    var processedFunction = () => {
+      postcss(pxToViewport(options)).process(rules, {
+        from: '/example/main.css'
+      }).css;
+    }
+
+    expect(processedFunction).toThrowError('options.exclude should be RegExp or Array of RegExp.');
+  });
 });
 
 describe('include', function () {
@@ -371,6 +394,19 @@ describe('include', function () {
     }).css;
 
     expect(processed).toBe(covered);
+  });
+
+  it('when using incorrect type at the time, should throw an error.', function () {
+    var options = {
+      include: 'incorrectTypeAsString'
+    };
+    var processedFunction = () => {
+      postcss(pxToViewport(options)).process(rules, {
+        from: '/example/main.css'
+      }).css;
+    }
+
+    expect(processedFunction).toThrowError('options.include should be RegExp or Array of RegExp.');
   });
 });
 
@@ -538,8 +574,8 @@ describe('filter-prop-list', function () {
   });
 });
 
-describe('landscape', function() {
-  it('should add landscape atRule', function() {
+describe('landscape', function () {
+  it('should add landscape atRule', function () {
     var css = '.rule { font-size: 16px; margin: 16px; margin-left: 5px; padding: 5px; padding-right: 16px }';
     var expected = '.rule { font-size: 5vw; margin: 5vw; margin-left: 1.5625vw; padding: 1.5625vw; padding-right: 5vw }@media (orientation: landscape) {.rule { font-size: 2.8169vw; margin: 2.8169vw; margin-left: 0.88028vw; padding: 0.88028vw; padding-right: 2.8169vw } }';
     var options = {
@@ -550,7 +586,7 @@ describe('landscape', function() {
     expect(processed).toBe(expected);
   });
 
-  it('should add landscape atRule with specified landscapeUnits', function() {
+  it('should add landscape atRule with specified landscapeUnits', function () {
     var css = '.rule { font-size: 16px; margin: 16px; margin-left: 5px; padding: 5px; padding-right: 16px }';
     var expected = '.rule { font-size: 5vw; margin: 5vw; margin-left: 1.5625vw; padding: 1.5625vw; padding-right: 5vw }@media (orientation: landscape) {.rule { font-size: 2.8169vh; margin: 2.8169vh; margin-left: 0.88028vh; padding: 0.88028vh; padding-right: 2.8169vh } }';
     var options = {
@@ -562,7 +598,7 @@ describe('landscape', function() {
     expect(processed).toBe(expected);
   });
 
-  it('should not add landscape atRule in mediaQueries', function() {
+  it('should not add landscape atRule in mediaQueries', function () {
     var css = '@media (min-width: 500px) { .rule { font-size: 16px } }';
     var expected = '@media (min-width: 500px) { .rule { font-size: 5vw } }';
     var options = {
@@ -574,7 +610,7 @@ describe('landscape', function() {
     expect(processed).toBe(expected);
   });
 
-  it('should not replace values inside landscape atRule', function() {
+  it('should not replace values inside landscape atRule', function () {
     var options = {
       replace: false,
       landscape: true
@@ -585,7 +621,7 @@ describe('landscape', function() {
     expect(processed).toBe(expected);
   });
 
-  it('should add landscape atRule with specified landscapeWidth', function() {
+  it('should add landscape atRule with specified landscapeWidth', function () {
     var options = {
       landscape: true,
       landscapeWidth: 768
@@ -596,7 +632,7 @@ describe('landscape', function() {
     expect(processed).toBe(expected);
   });
 
-  it('should not add landscape atRule if it has no nodes', function() {
+  it('should not add landscape atRule if it has no nodes', function () {
     var css = '.rule { font-size: 15vw }';
     var options = {
       landscape: true
@@ -608,8 +644,8 @@ describe('landscape', function() {
   });
 });
 
-describe('/* px-to-viewport-ignore */ & /* px-to-viewport-ignore-next */', function() {
-  it('should ignore right-commented', function() {
+describe('/* px-to-viewport-ignore */ & /* px-to-viewport-ignore-next */', function () {
+  it('should ignore right-commented', function () {
     var css = '.rule { font-size: 15px; /* simple comment */ width: 100px; /* px-to-viewport-ignore */ height: 50px; }';
     var expected = '.rule { font-size: 4.6875vw; /* simple comment */ width: 100px; height: 15.625vw; }';
 
@@ -618,7 +654,7 @@ describe('/* px-to-viewport-ignore */ & /* px-to-viewport-ignore-next */', funct
     expect(processed).toBe(expected);
   });
 
-  it('should ignore right-commented in multiline-css', function() {
+  it('should ignore right-commented in multiline-css', function () {
     var css = '.rule {\n  font-size: 15px;\n  width: 100px; /*px-to-viewport-ignore*/\n  height: 50px;\n}';
     var expected = '.rule {\n  font-size: 4.6875vw;\n  width: 100px;\n  height: 15.625vw;\n}';
 
@@ -627,12 +663,53 @@ describe('/* px-to-viewport-ignore */ & /* px-to-viewport-ignore-next */', funct
     expect(processed).toBe(expected);
   });
 
-  it('should ignore before-commented in multiline-css', function() {
+  it('should ignore before-commented in multiline-css', function () {
     var css = '.rule {\n  font-size: 15px;\n  /*px-to-viewport-ignore-next*/\n  width: 100px;\n  /*px-to-viewport-ignore*/\n  height: 50px;\n}';
     var expected = '.rule {\n  font-size: 4.6875vw;\n  width: 100px;\n  /*px-to-viewport-ignore*/\n  height: 15.625vw;\n}';
 
     var processed = postcss(pxToViewport()).process(css).css;
 
     expect(processed).toBe(expected);
+  });
+});
+
+describe('multiple-option-groups', function () {
+  it('should work on the readme example', function () {
+    var input = 'mobile h1 { margin: 0 0 20rpx; font-size: 32rpx; line-height: 2; letter-spacing: 1rpx; } desktop h1 { margin: 0 0 20dpx; font-size: 32dpx; line-height: 2; letter-spacing: 1dpx; }';
+    var output = 'mobile h1 { margin: 0 0 2.66667vw; font-size: 4.26667vw; line-height: 2; letter-spacing: 0.13333vw; } desktop h1 { margin: 0 0 1.04167vw; font-size: 1.66667vw; line-height: 2; letter-spacing: 0.05208vw; }';
+    var options = [
+      {
+        unitToConvert: 'rpx',
+        viewportWidth: 750,
+        viewportUnit: 'vw',
+        minPixelValue: 0
+      }, {
+        unitToConvert: 'dpx',
+        viewportWidth: 1920,
+        viewportUnit: 'vw',
+        minPixelValue: 0
+      }
+    ];
+    var processed = postcss(pxToViewport(options)).process(input).css;
+
+    expect(processed).toBe(output);
+  });
+
+  it('should not work with empty option array', function () {
+    var input = 'h1 { margin: 0 0 20px; font-size: 32px; line-height: 2; letter-spacing: 1px; }';
+    var output = 'h1 { margin: 0 0 20px; font-size: 32px; line-height: 2; letter-spacing: 1px; }';
+    var options = [];
+    var processed = postcss(pxToViewport(options)).process(input).css;
+
+    expect(processed).toBe(output);
+  });
+
+  it('should work with empty option object with default settings', function () {
+    var input = 'h1 { margin: 0 0 20px; font-size: 32px; line-height: 2; letter-spacing: 1px; }';
+    var output = 'h1 { margin: 0 0 6.25vw; font-size: 10vw; line-height: 2; letter-spacing: 1px; }';
+    var options = [{}];
+    var processed = postcss(pxToViewport(options)).process(input).css;
+
+    expect(processed).toBe(output);
   });
 });

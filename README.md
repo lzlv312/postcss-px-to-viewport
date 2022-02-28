@@ -120,7 +120,7 @@ Default Options:
     - If value is regexp, it checks to see if the selector matches the regexp.
         - `[/^body$/]` will match `body` but not `.body`
 - `minPixelValue` (Number) Set the minimum pixel value to replace.
-- `mediaQuery` (Boolean) Allow px to be converted in media queries.
+- `mediaQuery` (Boolean or Regexp or Array) Allow px to be converted in media queries.
 - `replace` (Boolean) replaces rules containing vw instead of adding fallbacks.
 - `exclude` (Regexp or Array of Regexp) Ignore some files like 'node_modules'
     - If value is regexp, will ignore the matches files.
@@ -134,6 +134,30 @@ Default Options:
 - `landscapeWidth` (Number) Viewport width for landscape orientation.
 
 > `exclude` and `include` can be set together, and the intersection of the two rules will be taken.
+
+Or you can set up multiple option groups like this:
+
+```js
+[
+  {
+    unitToConvert: 'rpx',
+    viewportWidth: 750,
+    viewportUnit: 'vw',
+    minPixelValue: 0
+  }, {
+    unitToConvert: 'dpx',
+    viewportWidth: 1920,
+    viewportUnit: 'vw',
+    minPixelValue: 0
+  }
+]
+```
+
+Passing in an empty array (`[]`) will not convert any units.
+
+Each option group will be merged with the default settings, so you can easily define multiple custom units and conversion rules.
+
+> If the `unitToConvert` in multiple sets of settings is the same, the last declared one may override the previously declared.
 
 #### Ignoring
 
