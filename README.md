@@ -109,9 +109,9 @@ Default Options:
 - `propList` (Array) The properties that can change from px to vw.
   - Values need to be exact matches.
   - Use wildcard * to enable all properties. Example: ['*']
-  - Use * at the start or end of a word. (['*position*'] will match background-position-y)
-  - Use ! to not match a property. Example: ['*', '!letter-spacing']
-  - Combine the "not" prefix with the other prefixes. Example: ['*', '!font*']
+  - Use * at the start or end of a word. (['\*position*'] will match background-position-y)
+  - Use ! to not match a property. Example: ['\*', '!letter-spacing']
+  - Combine the "not" prefix with the other prefixes. Example: ['\*', '!font*']
 - `viewportUnit` (String) Expected units.
 - `fontViewportUnit` (String) Expected units for font.
 - `selectorBlackList` (Array) The selectors to ignore and leave as px.

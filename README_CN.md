@@ -108,10 +108,10 @@ $ yarn add -D postcss-px-to-viewport
 - `unitPrecision` (Number) 单位转换后保留的精度
 - `propList` (Array) 能转化为vw的属性列表
   - 传入特定的CSS属性；
-  - 可以传入通配符"*"去匹配所有属性，例如：['*']；
-  - 在属性的前或后添加"*",可以匹配特定的属性. (例如['*position*'] 会匹配 background-position-y)
-  - 在特定属性前加 "!"，将不转换该属性的单位 . 例如: ['*', '!letter-spacing']，将不转换letter-spacing
-  - "!" 和 "*"可以组合使用， 例如: ['*', '!font*']，将不转换font-size以及font-weight等属性
+  - 可以传入通配符"\*"去匹配所有属性，例如：['\*']；
+  - 在属性的前或后添加"\*",可以匹配特定的属性. (例如['\*position*'] 会匹配 background-position-y)
+  - 在特定属性前加 "!"，将不转换该属性的单位 . 例如: ['\*', '!letter-spacing']，将不转换letter-spacing
+  - "!" 和 "\*"可以组合使用， 例如: ['\*', '!font*']，将不转换font-size以及font-weight等属性
 - `viewportUnit` (String) 希望使用的视口单位
 - `fontViewportUnit` (String) 字体使用的视口单位
 - `selectorBlackList` (Array) 需要忽略的CSS选择器，不会转为视口单位，使用原有的px等单位。
